@@ -37,7 +37,7 @@
 
     ```json
     {
-    "StackId": "arn:aws:cloudformation:us-abcd-x:123456889012:stack/RDS-PostgreSQL/b4d0f5e0-d4c2-11ec-9529-06edcc65f112"
+    "StackId": "arn:aws:cloudformation:us-abcd-x:123456789012:stack/RDS-PostgreSQL/b4d0f5e0-d4c2-11ec-9529-06edcc65f112"
     }
     ```
 
