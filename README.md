@@ -33,7 +33,7 @@
       --template-body file://./RDS-PostgreSQL.yaml
     ```
 
-3. AWS CloudFormation returns folloiwing output
+3. AWS CloudFormation returns following output
 
     ```json
     {
