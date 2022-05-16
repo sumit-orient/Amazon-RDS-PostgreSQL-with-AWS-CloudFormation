@@ -41,3 +41,7 @@
     }
     ```
 
+4. Monitor the progress by the stack's events in AWS management console
+
+    <img src="https://github.com/t2yijaeho/Amazon-RDS-PostgreSQL-with-AWS-CloudFormation/blob/matia/images/CloudFormation%20Stack%20Creation%20Events.png?raw=true">
+
