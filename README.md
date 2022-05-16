@@ -24,4 +24,20 @@
     wget https://raw.githubusercontent.com/t2yijaeho/Amazon-RDS-PostgreSQL-with-AWS-CloudFormation/2eb837192a05043afdb3148586fc8e90a3baa8ad/Template/RDS-PostgreSQL.yaml
     ```
 
+
 2. Create an AWS CloudFormation stack
+
+    ```bash
+    aws cloudformation create-stack \
+      --stack-name RDS-PostgreSQL \
+      --template-body file://./RDS-PostgreSQL.yaml
+    ```
+
+3. AWS CloudFormation returns folloiwing output
+
+    ```json
+    {
+    "StackId": "arn:aws:cloudformation:us-abcd-x:123456889012:stack/RDS-PostgreSQL/b4d0f5e0-d4c2-11ec-9529-06edcc65f112"
+    }
+    ```
+
