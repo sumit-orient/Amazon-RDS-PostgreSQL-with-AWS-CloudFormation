@@ -33,11 +33,15 @@
       --template-body file://./RDS-PostgreSQL.yaml
     ```
 
-3. AWS CloudFormation returns folloiwing output
+3. AWS CloudFormation returns following output
 
     ```json
     {
-    "StackId": "arn:aws:cloudformation:us-abcd-x:123456889012:stack/RDS-PostgreSQL/b4d0f5e0-d4c2-11ec-9529-06edcc65f112"
+    "StackId": "arn:aws:cloudformation:us-abcd-x:123456789012:stack/RDS-PostgreSQL/b4d0f5e0-d4c2-11ec-9529-06edcc65f112"
     }
     ```
+
+4. Monitor the progress by the stack's events in AWS management console
+
+    <img src="https://github.com/t2yijaeho/Amazon-RDS-PostgreSQL-with-AWS-CloudFormation/blob/matia/images/CloudFormation%20Stack%20Creation%20Events.png?raw=true">
 
