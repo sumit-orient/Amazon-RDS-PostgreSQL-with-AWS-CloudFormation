@@ -21,7 +21,7 @@
 1. Get an AWS CloudFormation stack template body
 
     ```bash
-    wget https://raw.githubusercontent.com/t2yijaeho/Amazon-RDS-PostgreSQL-with-AWS-CloudFormation/2eb837192a05043afdb3148586fc8e90a3baa8ad/Template/RDS-PostgreSQL.yaml
+    wget https://github.com/t2yijaeho/Amazon-RDS-PostgreSQL-with-AWS-CloudFormation/raw/matia/Template/RDS-PostgreSQL.yaml
     ```
 
 
