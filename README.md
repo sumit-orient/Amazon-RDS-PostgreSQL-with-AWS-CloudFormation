@@ -45,3 +45,63 @@
 
     <img src="https://github.com/t2yijaeho/Amazon-RDS-PostgreSQL-with-AWS-CloudFormation/blob/matia/images/CloudFormation%20Stack%20Creation%20Events.png?raw=true">
 
+
+## 3. Install PostgreSQL Client
+
+1. List the available PostgreSQL toics from the Extras Library
+
+    ```bash
+      sudo amazon-linux-extras | grep postgresql
+    ```
+
+2. Enable the desired latest PostgreSQL topic
+
+    ```bash
+      sudo amazon-linux-extras enable postgresql13 | grep postgresql
+    ```
+
+2. Install PostgreSQL topic
+
+    ```bash
+      sudo yum clean metadata && sudo yum install -y postgresql
+    ```
+
+3. Verify the installation and confirm the PostgreSQL Client version:
+
+    ```bash
+      sudo yum list installed postgresql
+    ```
+    ```bash
+      psql --version
+    ```
+
+
+## 4. Connect to an Amazon RDS PostgreSQL
+
+1. Describe Amazon RDS PostgreSQL
+
+    ```bash
+    aws rds describe-db-instances \
+        --db-instance-identifier targetdb \
+      | jq --raw-output \
+        "(\"Endpoint : \" + .DBInstances[0].Endpoint.Address), (\"Port : \" + (.DBInstances[0].Endpoint.Port | tostring)), (\"Master Username : \" + .DBInstances[0].MasterUsername), (\"DB Name : \" + .DBInstances[0].DBName)"
+    ```
+
+2. Connect to Amazon RDS PostgreSQL instance using PostgreSQL Client 
+
+    Change **==<DB instance endpoint>==** according to yours
+    
+    ```bash
+      psql \
+        --host=<DB instance endpoint> \
+        --port=45432 \
+        --username=postgres \
+        --password \
+        --dbname=postgres
+    ```
+    Password
+    ```bash
+      target1234
+    ```
+
+
