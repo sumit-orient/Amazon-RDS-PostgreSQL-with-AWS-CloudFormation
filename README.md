@@ -78,7 +78,29 @@
 
 ## 4. Connect to an Amazon RDS PostgreSQL
 
-1. Describe Amazon RDS PostgreSQL
+1. Add inboud rule to Amazon RDS PostgreSQL Security Group
+
+    Find CloudShell IP address
+    ```bash
+      CLOUDSHELL_IP_ADDRESS=$(curl https://checkip.amazonaws.com)
+      echo $CLOUDSHELL_IP_ADDRESS
+    ```
+    
+    Find Amazon RDS PostgreSQL Security Group ID
+    ```bash
+      RDS_SECURITY_GROUP_ID=$(aws rds describe-db-instances \
+          --db-instance-identifier targetdb \
+        | jq --raw-output \
+          ".DBInstances[0].VpcSecurityGroups[0].VpcSecurityGroupId")
+      echo $RDS_SECURITY_GROUP_ID
+    ```
+    
+    Add CloudShell IP address to Security Group inboud rule
+    ```bash
+
+    ```
+
+2. Describe Amazon RDS PostgreSQL
 
     ```bash
     aws rds describe-db-instances \
@@ -87,9 +109,9 @@
         "(\"Endpoint : \" + .DBInstances[0].Endpoint.Address), (\"Port : \" + (.DBInstances[0].Endpoint.Port | tostring)), (\"Master Username : \" + .DBInstances[0].MasterUsername), (\"DB Name : \" + .DBInstances[0].DBName)"
     ```
 
-2. Connect to Amazon RDS PostgreSQL instance using PostgreSQL Client 
+3. Connect to Amazon RDS PostgreSQL instance using PostgreSQL Client 
 
-    Change **==<DB instance endpoint>==** according to yours
+    Change ***\<DB instance endpoint\>***
     
     ```bash
       psql \
