@@ -25,7 +25,7 @@ Resources:
       MultiAZ: false
     #Connectivity
       #DBSubnetGroupName
-      PubliclyAccessible: true
+      PubliclyAccessible: false
       #VPCSecurityGroups:
       #AvailabilityZone:
       Port: 45432
@@ -43,3 +43,21 @@ Resources:
       AllowMajorVersionUpgrade: false
       AutoMinorVersionUpgrade: false
       DeletionProtection: false
+Outputs:
+  InstanceId:
+    Description: InstanceId of the newly created RDS Instance
+    Value: !Ref PostgreSQL
+  EndpointAddress:
+    Description: The connection endpoint for the database
+    Value: !GetAtt PostgreSQL.Endpoint.Address
+  EndpointPort:
+    Description: The port number on which the database accepts connections
+    Value: !GetAtt PostgreSQL.Endpoint.Port
+  MasterUsername:
+    Description: Database Master Username
+    Value: !GetAtt PostgreSQL.MasterUsername
+  DatabaseName:
+    Description: Database Name
+    Value: !GetAtt PostgreSQL.DBName
+    
+    
