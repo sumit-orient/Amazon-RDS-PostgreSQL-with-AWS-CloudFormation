@@ -53,11 +53,3 @@ Outputs:
   EndpointPort:
     Description: The port number on which the database accepts connections
     Value: !GetAtt PostgreSQL.Endpoint.Port
-  MasterUsername:
-    Description: Database Master Username
-    Value: !GetAtt PostgreSQL.MasterUsername
-  DatabaseName:
-    Description: Database Name
-    Value: !GetAtt PostgreSQL.DBName
-    
-    
