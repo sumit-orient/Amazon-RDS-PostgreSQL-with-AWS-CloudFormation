@@ -51,28 +51,28 @@
 1. List the available PostgreSQL toics from the Extras Library
 
     ```bash
-      sudo amazon-linux-extras | grep postgresql
+    sudo amazon-linux-extras | grep postgresql
     ```
 
 2. Enable the desired latest PostgreSQL topic
 
     ```bash
-      sudo amazon-linux-extras enable postgresql13 | grep postgresql
+    sudo amazon-linux-extras enable postgresql13 | grep postgresql
     ```
 
 2. Install PostgreSQL topic
 
     ```bash
-      sudo yum clean metadata && sudo yum install -y postgresql
+    sudo yum clean metadata && sudo yum install -y postgresql
     ```
 
 3. Verify the installation and confirm the PostgreSQL Client version:
 
     ```bash
-      sudo yum list installed postgresql
+    sudo yum list installed postgresql
     ```
     ```bash
-      psql --version
+    psql --version
     ```
 
 
@@ -82,48 +82,77 @@
 
     Find CloudShell IP address
     ```bash
-      CLOUDSHELL_IP_ADDRESS=$(curl https://checkip.amazonaws.com)
-      echo $CLOUDSHELL_IP_ADDRESS
+    CLOUDSHELL_IP_ADDRESS=$(curl https://checkip.amazonaws.com)
+    echo $CLOUDSHELL_IP_ADDRESS
     ```
     
     Find Amazon RDS PostgreSQL Security Group ID
     ```bash
-      RDS_SECURITY_GROUP_ID=$(aws rds describe-db-instances \
-          --db-instance-identifier targetdb \
-        | jq --raw-output \
-          ".DBInstances[0].VpcSecurityGroups[0].VpcSecurityGroupId")
-      echo $RDS_SECURITY_GROUP_ID
+    RDS_SECURITY_GROUP_ID=$(aws rds describe-db-instances \
+        --db-instance-identifier targetdb \
+      | jq --raw-output \
+        ".DBInstances[0].VpcSecurityGroups[0].VpcSecurityGroupId")
+    echo $RDS_SECURITY_GROUP_ID
     ```
     
     Add CloudShell IP address to Security Group inboud rule
     ```bash
-
+    aws ec2 authorize-security-group-ingress \
+      --group-id $RDS_SECURITY_GROUP_ID \
+      --protocol tcp --port 45432 \
+      --cidr "${CLOUDSHELL_IP_ADDRESS}/32"
     ```
 
 2. Describe Amazon RDS PostgreSQL
 
+    Describe Amazon RDS PostgreSQL instance 
+    ```bash
+    aws rds describe-db-instances \
+        --db-instance-identifier targetdb
+    ```
+    
+    
     ```bash
     aws rds describe-db-instances \
         --db-instance-identifier targetdb \
       | jq --raw-output \
         "(\"Endpoint : \" + .DBInstances[0].Endpoint.Address), (\"Port : \" + (.DBInstances[0].Endpoint.Port | tostring)), (\"Master Username : \" + .DBInstances[0].MasterUsername), (\"DB Name : \" + .DBInstances[0].DBName)"
     ```
+    
+    Put DB instance endpoint address to a variable
+    ```bash
+    DB_INSTANCE_ENDPOINT=$( \
+      aws rds describe-db-instances \
+        --db-instance-identifier targetdb \
+      | jq --raw-output \
+        '.DBInstances[0].Endpoint.Address')
+    echo $DB_INSTANCE_ENDPOINT
+    ```
 
 3. Connect to Amazon RDS PostgreSQL instance using PostgreSQL Client 
 
-    Change ***\<DB instance endpoint\>***
-    
+    Save Password to .pgpass file
     ```bash
-      psql \
-        --host=<DB instance endpoint> \
-        --port=45432 \
-        --username=postgres \
-        --password \
-        --dbname=postgres
-    ```
-    Password
-    ```bash
-      target1234
+    (umask 177 ; \
+      echo $DB_INSTANCE_ENDPOINT:45432:postgres:postgres:target1234 > .pgpass)
     ```
 
+    Connect to instance
+    ```bash
+    psql \
+      --host=$DB_INSTANCE_ENDPOINT \
+      --port=45432 \
+      --username=postgres \
+      --no-password \
+      --dbname=postgres
+    ```
+    
+    PostgreSQL Client provides a prompt with the name of the database
+    ```bash
+    psql (13.3, server 13.4)
+    SSL connection (protocol: TLSv1.2, cipher: ECDHE-RSA-AES256-GCM-SHA384, bits: 256, compression: off)
+    Type "help" for help.
+
+    postgres=>
+    ```
 
