@@ -103,7 +103,7 @@
       --cidr "${CLOUDSHELL_IP_ADDRESS}/32"
     ```
 
-2. Describe Amazon RDS PostgreSQL
+2. Find Amazon RDS PostgreSQL connection info
 
     Describe Amazon RDS PostgreSQL instance 
     ```bash
@@ -111,7 +111,7 @@
         --db-instance-identifier targetdb
     ```
     
-    
+    Find Endpoint, Port, Username, Database Name
     ```bash
     aws rds describe-db-instances \
         --db-instance-identifier targetdb \
@@ -135,6 +135,7 @@
     ```bash
     (umask 177 ; \
       echo $DB_INSTANCE_ENDPOINT:45432:postgres:postgres:target1234 > .pgpass)
+    cat .pgpass
     ```
 
     Connect to instance
@@ -156,3 +157,90 @@
     postgres=>
     ```
 
+
+## 5. Create a user, database, schema on Amazon RDS PostgreSQL
+
+1. Create a user with a password
+
+    ```sql
+    CREATE USER addrdba
+    WITH PASSWORD '1234';
+    ```
+    
+    List User
+    ```sql
+    SELECT usename, usecreatedb FROM pg_catalog.pg_user;
+    ```
+    
+    List Roles
+    ```sql
+    \du
+    ```
+
+2. Create a target database
+
+    ```sql
+    CREATE DATABASE addr_target
+    TEMPLATE = template0
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'C'
+    LC_CTYPE = 'C';
+    ```
+    
+    Change database owner to created user
+    ```sql
+    ALTER DATABASE addr_target
+    OWNER TO addrdba;
+    ```
+    
+    List Databases
+    ```sql
+    \list
+    ```
+
+3. Create a schema on a database 
+
+    Connect as a user created
+    ```sql
+    \connect addr_target addrdba
+    ```
+    User Password
+    ```text
+    1234
+    ```
+    
+    ```bash
+    postgres=> \connect addr_target addrdba
+    Password for user addrdba: 
+    psql (13.3, server 13.4)
+    SSL connection (protocol: TLSv1.2, cipher: ECDHE-RSA-AES256-GCM-SHA384, bits: 256, compression: off)
+    You are now connected to database "addr_target" as user "addrdba".
+    addr_target=>
+    ```
+    
+    Create a schema on a newly created database 
+    ```sql
+    CREATE SCHEMA addr
+    AUTHORIZATION addrdba;
+    ```
+    
+    Change database owner to a user created
+    ```sql
+    ALTER DATABASE addr_target
+    OWNER TO addrdba;
+    ```
+    
+    List schemas
+    ```sql
+    \dn
+    ```
+    
+    ```sql
+    addr_target=> \dn
+      List of schemas
+      Name  |  Owner   
+    --------+----------
+     addr   | addrdba
+     public | rdsadmin
+    (2 rows)
+    ```
