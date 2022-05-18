@@ -171,11 +171,13 @@
     ```sql
     SELECT usename, usecreatedb FROM pg_catalog.pg_user;
     ```
+    <img src="https://github.com/t2yijaeho/Amazon-RDS-PostgreSQL-with-AWS-CloudFormation/blob/matia/images/PostgreSQL%20-%20List%20of%20pg_user.png?raw=true">    
     
     List Roles
     ```sql
     \du
     ```
+    <img src="https://github.com/t2yijaeho/Amazon-RDS-PostgreSQL-with-AWS-CloudFormation/blob/matia/images/PostgreSQL%20-%20List%20of%20roles.png?raw=true">
 
 2. Create a target database
 
@@ -197,6 +199,7 @@
     ```sql
     \list
     ```
+    <img src="https://github.com/t2yijaeho/Amazon-RDS-PostgreSQL-with-AWS-CloudFormation/blob/matia/images/PostgreSQL%20-%20List%20of%20Databases.png?raw=true">
 
 3. Create a schema on a database 
 
@@ -222,12 +225,6 @@
     ```sql
     CREATE SCHEMA addr
     AUTHORIZATION addrdba;
-    ```
-    
-    Change database owner to a user created
-    ```sql
-    ALTER DATABASE addr_target
-    OWNER TO addrdba;
     ```
     
     List schemas
