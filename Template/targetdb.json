@@ -84,7 +84,7 @@
             "DomainMemberships": [],
             "CopyTagsToSnapshot": false,
             "MonitoringInterval": 0,
-            "DBInstanceArn": "arn:aws:rds:us-east-2:289737725843:db:targetdb",
+            "DBInstanceArn": "arn:aws:rds:us-east-2:123456789012:db:targetdb",
             "IAMDatabaseAuthenticationEnabled": false,
             "PerformanceInsightsEnabled": false,
             "DeletionProtection": false,
@@ -93,7 +93,7 @@
             "TagList": [
                 {
                     "Key": "aws:cloudformation:stack-id",
-                    "Value": "arn:aws:cloudformation:us-east-2:289737725843:stack/RDS-PostgreSQL/af0afda0-d5b6-11ec-a9ce-0a7cc624f63e"
+                    "Value": "arn:aws:cloudformation:us-east-2:123456789012:stack/RDS-PostgreSQL/af0afda0-d5b6-11ec-a9ce-0a7cc624f63e"
                 },
                 {
                     "Key": "aws:cloudformation:stack-name",
