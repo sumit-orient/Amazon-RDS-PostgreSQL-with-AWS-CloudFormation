@@ -79,9 +79,9 @@ Refer to [AWS CloudShell](https://github.com/t2yijaeho/AWS-CloudShell)
     Find Amazon RDS PostgreSQL Security Group ID
     ```bash
     RDS_SECURITY_GROUP_ID=$(aws rds describe-db-instances \
-        --db-instance-identifier targetdb \
-      | jq --raw-output \
-        ".DBInstances[0].VpcSecurityGroups[0].VpcSecurityGroupId")
+      --db-instance-identifier targetdb \
+      --query "DBInstances[0].VpcSecurityGroups[0].[VpcSecurityGroupId]" \
+      --output text)
     echo $RDS_SECURITY_GROUP_ID
     ```
     
