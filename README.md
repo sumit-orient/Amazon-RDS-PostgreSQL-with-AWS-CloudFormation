@@ -1,9 +1,3 @@
-<head>
-    
-<meta name="google-site-verification" content="TTReWXgQ95IrIesszJWglu6N-FkK1HwBDgyR8YF6Zvg" />
-
-</head>
-
 # Amazon RDS PostgreSQL with AWS CloudFormation
 
 
